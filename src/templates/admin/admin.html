@@ -1,0 +1,106 @@
+{% extends "_base.html" %}{% block content %}
+
+<div class="div-container">
+  <h1 class="title">{% block title %} Admin Dashboard {% endblock %}</h1>
+
+  <!-- Users Table -->
+  <h2>Users</h2>
+  <div class="card-body">
+    <div class="table-responsive">
+      <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Email</th>
+            <th scope="col">Created</th>
+            <th scope="col">Admin</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for user in users %}
+          <tr>
+            <td>{{ user.id }}</td>
+            <td>{{ user.email }}</td>
+            <td>{{ user.created_on }}</td>
+            {% if user.is_admin %}
+              <td>Yes</td>
+            {% else %}
+              <td>No</td>
+            {% endif %}
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Nodes Table -->
+  <h2>Nodes</h2>
+  <div class="card-body">
+    <div class="table-responsive">
+      <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Name</th>
+            <th scope="col">Created</th>
+            <th scope="col">Status</th>
+            <th scope="col">Latitude</th>
+            <th scope="col">Longitude</th>
+            <th scope="col">IP Address</th>
+            <th scope="col">Device Type</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for node in nodes %}
+          <tr>
+            <td>{{ node.id }}</td>
+            <td>{{ node.name }}</td>
+            <td>{{ node.created_on }}</td>
+            <td>{{ node.status }}</td>
+            <td>{{ node.latitude }}</td>
+            <td>{{ node.longitude }}</td>
+            <td>{{ node.ip_address }}</td>
+            <td>{{ node.device_type }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Links Table -->
+  <h2>Links</h2>
+  <div class="card-body">
+    <div class="table-responsive">
+      <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Source</th>
+            <th scope="col">Target</th>
+            <th scope="col">Created</th>
+            <th scope="col">Link Type</th>
+            <th scope="col">Distance</th>
+            <th scope="col">Bandwidth</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for link in links %}
+          <tr>
+            <td>{{ link.id }}</td>
+            <td>{{ node_dict[link.source] }}</td>
+            <td>{{ node_dict[link.target] }}</td>
+            <td>{{ link.created_on }}</td>
+            <td>{{ link.link_type }}</td>
+            <td>{{ link.distance }}</td>
+            <td>{{ link.bandwidth }}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+</div>
+  {% endblock %}
+  

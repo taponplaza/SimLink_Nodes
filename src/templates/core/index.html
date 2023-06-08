@@ -1,0 +1,66 @@
+{% extends "_base.html" %}{% block content %}
+
+<script src="/static/js/index.js" charset="utf-8"></script>
+<script src="/static/js/map.js" charset="utf-8"></script>
+
+<div class="div-container">
+    <h3>Mapa de visualización de nodos</h3>
+    <hr>
+    <div class="row">
+        <div id="mapdiv" class="col-8">
+            <div class="row minuspadding">
+                <div class="col-lg-6">
+                    <button id="changemap" type="button" class="btn btn-primary btn-sm" onclick="flip()">
+                        Change to NodesMap
+                    </button>
+                </div>
+            </div>
+            <div id="nonGeographicMap" style="visibility: hidden;height:0">
+                <svg id="physicsMap" class="shadow border rounded mt-3" width="960" height="600" style="background-color:white"></svg>
+            </div>
+            <div id="geographicMap" style="margin-bottom:20px;margin-top:20px;width:960px;height:600px"></div>
+        </div>
+        <div id="paneldiv" class="col-4 card panel panelbefore">
+            <div id="carddiv">
+                <div class="card-body reducedpadding">
+                    <h4 id="card_title" class="card-title"></h4>
+                    <h6 id="card_code" class="card-title"></h6>
+                </div>
+                <ul id="cardlist" class="list-group list-group-flush reducefontsize">
+                    <li class="list-group-item reducedpadding">
+                        <span class="font-weight-bold">Status: </span><span id="card_status"></span>
+                    </li>
+                    <li class="list-group-item reducedpadding">
+                        <span class="font-weight-bold">Ip addres: </span><span id="card_ip"></span>
+                    </li>
+                    <li class="list-group-item reducedpadding">
+                        <span class="font-weight-bold">Coordenada: </span>
+                        <table class="inlinetable">
+                            <tr>
+                                <td id="card_longitude"></td>
+                            </tr>
+                            <tr>
+                                <td id="card_latitude"></td>
+                            </tr>
+                        </table>
+                    </li>
+                    <li class="list-group-item reducedpadding">
+                        <span class="font-weight-bold">Device Type: </span><span id="card_type"></span>
+                    </li>
+
+                    <li class="list-group-item">
+                        <div class="input-group">
+                            <div class="input-group-append">
+                                <button class="btn btn-outline-secondary" type="button">Go!</button>
+                            </div>
+                            <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" placeholder="Node">
+                        </div>
+                    </li>
+                    
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

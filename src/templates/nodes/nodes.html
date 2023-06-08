@@ -1,0 +1,31 @@
+{% extends "_base.html" %}
+
+{% block content %}
+<div class="container">
+    <h1>Add Node</h1>
+    <form action="" method="post">
+        {{ form.csrf_token }}
+        <div class="form-group">
+            <label for="name">Node Name</label>
+            {{ form.name(class="form-control", id="name", required=True) }}
+        </div>
+        <div class="form-group">
+            <label for="latitude">Latitude</label>
+            {{ form.latitude(class="form-control", id="latitude") }}
+        </div>
+        <div class="form-group">
+            <label for="longitude">Longitude</label>
+            {{ form.longitude(class="form-control", id="longitude") }}
+        </div>
+        <div class="form-group">
+            <label for="ip_address">IP Address</label>
+            {{ form.ip_address(class="form-control", id="ip_address") }}
+        </div>
+        <div class="form-group">
+            <label for="device_type">Device Type</label>
+            {{ form.device_type(class="form-control", id="device_type") }}
+        </div>
+        {{ form.submit(class="btn btn-primary") }}
+    </form>
+</div>
+{% endblock %}

@@ -1,0 +1,46 @@
+{% extends "_base.html" %}
+
+{% block content %}
+<div class="container">
+    <h1>Add Link</h1>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="alert alert-{{ category }}">{{ message }}</div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+    <form action="" method="post">
+        {{ form.csrf_token }}
+        <div class="form-group">
+            <label for="source">Source Node</label>
+            <select name="source" id="source" class="custom-select">
+                {% for node in nodes %}
+                    <option value="{{ node.id }}">{{ node.name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="target">Target Node</label>
+            <select name="target" id="target" class="custom-select">
+                {% for node in nodes %}
+                    <option value="{{ node.id }}">{{ node.name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="link_type">Link Type</label>
+            {{ form.link_type(class="form-control", id="link_type") }}
+        </div>
+        <div class="form-group">
+            <label for="distance">Distance</label>
+            {{ form.distance(class="form-control", id="distance") }}
+        </div>
+        <div class="form-group">
+            <label for="bandwidth">Bandwidth</label>
+            {{ form.bandwidth(class="form-control", id="bandwidth") }}
+        </div>
+        {{ form.submit(class="btn btn-primary") }}
+    </form>
+</div>
+{% endblock %}

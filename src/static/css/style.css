@@ -1,0 +1,67 @@
+.error {
+    color: red;
+    margin-bottom: 5px;
+    text-align: center;
+  }
+  
+a {
+    text-decoration: none;
+  }
+  
+body {
+    background-color: rgb(255, 255, 255);
+}
+
+.links line {
+    stroke: #aaa;
+}
+
+.links_geo line {
+    stroke: #7bc1f0;
+}
+
+.nodes circle {
+    pointer-events: all;
+    stroke: none;
+    stroke-width: 40px;
+}
+
+.nodes_geo circle {
+}
+
+pre {
+    outline: 1px solid #ccc;
+    padding: 5px;
+    margin: 5px;
+}
+
+.string {
+    color: green;
+}
+
+.number {
+    color: darkorange;
+}
+
+.boolean {
+    color: blue;
+}
+
+.null {
+    color: magenta;
+}
+
+.key {
+    color: red;
+}
+
+.map-container {
+    position: relative;
+  }
+  
+.map {
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+  
