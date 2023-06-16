@@ -6,11 +6,11 @@ $(document).ready(function () {
         now = new Date(Date.now() - duration),
         data = d3.range(n).map(function() { return 0; });
 
-    var margin = {top: 20, right: 80, bottom: 100, left: 40};
+    var margin = {top: 10, right: 25, bottom: 25, left: 25};
 
-    var svg = d3.select("svg"),
-        width = +svg.attr("width") - margin.left - margin.right;
-        height = +svg.attr("height") - margin.top - margin.bottom;
+    var svg = d3.select("#sensorDataGraph"),
+        width = +svg.node().getBoundingClientRect().width - margin.left - margin.right;
+        height = +svg.node().getBoundingClientRect().height - margin.top - margin.bottom;
     
     var parseTime = d3.timeParse("%H:%M:%S");
     
@@ -84,10 +84,53 @@ $(document).ready(function () {
         data.shift();
     }
 
-    // Listen for data updates from the server
-  socket.on("updateSensorData", function (msg) {
-    console.log("Received sensorData :: " + msg.date + " :: " + msg.value);
-    Update(msg);
-});
+    function clearGraph() {
+        // Clear the line from the graph
+        svg.selectAll(".line").remove();
     
-    })
+        // Reset the data
+        data = d3.range(n).map(function() { return 0; });
+    
+        // Reset the path variable
+        path = main.append("g")
+            .attr("clip-path", "url(#clip)")
+            .append("path")
+            .datum(data)
+            .attr("class", "line");
+    }
+
+    function startSocket() {
+        clearGraph();
+        socket = io.connect();
+        socket.on("updateSensorData", function (msg) {
+            console.log("Received sensorData :: " + msg.date + " :: " + msg.value);
+            Update(msg);
+        });
+    }
+
+    function stopSocket() {
+        if (socket) {
+            socket.disconnect();
+        }
+    }
+
+    let isConnected = false;
+
+    $('#startSocketBtn').on('click', function() {
+        if (!isConnected) {
+            startSocket();
+            $(this).text('Stop Socket');
+        } else {
+            stopSocket();
+            $(this).text('Start Socket');
+        }
+        isConnected = !isConnected;
+    });
+
+    window.clearGraphG = function() {
+        stopSocket();
+        isConnected = false;
+        clearGraph();
+        $('#startSocketBtn').text('Start Socket');
+    }
+})

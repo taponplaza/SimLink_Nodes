@@ -8,6 +8,7 @@ from flask_sqlalchemy import SQLAlchemy
 from random import random
 from threading import Lock
 from datetime import datetime
+from random import randint
 
 app = Flask(__name__)
 app.config.from_object(config("APP_SETTINGS"))
@@ -18,10 +19,6 @@ bcrypt = Bcrypt(app)
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
 socketio = SocketIO(app, cors_allowed_origins='*')
-
-# Background Thread
-thread = None
-thread_lock = Lock()
 
 # Registering blueprints
 from src.accounts.views import accounts_bp
@@ -53,23 +50,44 @@ def get_current_datetime():
     now = datetime.now()
     return now.strftime("%H:%M:%S")
 
-# Generate random sequence of dummy sensor values and send it to our clients
-def background_thread():
+# Existing background thread
+def background_thread_sensor():
     print("Generating random sensor values")
     while True:
         dummy_sensor_value = round(random() * 40, 3)
         socketio.emit('updateSensorData', {'value': dummy_sensor_value, "date": get_current_datetime()})
         socketio.sleep(750/1000)
 
+# In the server-side code
+def background_thread_pair():
+    while True:
+        random_value1 = randint(1,11)
+        random_value2 = randint(1,11)
+
+        while random_value1 == random_value2:
+            random_value2 = randint(1,11)
+
+        socketio.emit('updatePairData', {'value1': random_value1, 'value2': random_value2})
+        socketio.sleep(450/1000)
+
+
+# Global thread variables
+thread_sensor = None
+thread_pair = None
+thread_lock = Lock()
+
+
 # Decorator for connect
 @socketio.on('connect')
 def connect():
-    global thread
+    global thread_sensor, thread_pair
     print('Client connected')
 
     with thread_lock:
-        if thread is None:
-            thread = socketio.start_background_task(background_thread)
+        if thread_sensor is None:
+            thread_sensor = socketio.start_background_task(background_thread_sensor)
+        if thread_pair is None:
+            thread_pair = socketio.start_background_task(background_thread_pair)
 
 # Decorator for disconnect
 @socketio.on('disconnect')

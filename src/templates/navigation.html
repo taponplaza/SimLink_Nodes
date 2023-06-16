@@ -5,7 +5,6 @@
       <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
         <li><a href="{{ url_for('core.home') }}" class="nav-link px-2 text-secondary">Home</a></li>
         {% if current_user.is_authenticated %}
-        <li><a href="{{ url_for('core.event') }}" class="nav-link px-2 text-secondary">Graph Event</a></li>
           {% if current_user.is_admin %}
           <li><a href="{{ url_for('admin.admin') }}" class="nav-link px-2 text-secondary">Admin</a></li>
           <li><a href="{{ url_for('nodes.nodes') }}" class="nav-link px-2 text-secondary">Add Node</a></li>

@@ -1,20 +1,19 @@
-# Nodes version Demo
+# Flask Basic User Authentication 
 
-Version demo para probar el proyecto tfg aun sin acabar.
+User authentication is important for protecting sensitive information and resources from unauthorized access. In this tutorial, you will learn how to set up basic user authentication – that is password-based authentication – in your Flask application.
 
-1º clonar repositorio
+Blog Tutorial: https://ashutoshkrris.hashnode.dev/how-to-set-up-basic-user-authentication-in-a-flask-app
 
-2º crear venv `python3 -m venv venv`
+Project Demo: https://youtu.be/XxSESg89xEI
 
-3º `source venv/bin/activate`
+source .env
 
-4º Inicializar variables de entorno mediante `source .env`
+source venv
 
-5º Instalar los requisitos `pip install -r requirements.txt`
+flask db init
 
-6º Iniciar la aplicación debug mode `python3 manage.py run`
+flask db migrate
 
-Url de la aplicación http://localhost:5000/.
+flask db upgrade
 
-Admin user: admin@mail.com  password1234
-
+python manage.py run

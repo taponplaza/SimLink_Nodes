@@ -44,9 +44,3 @@ def get_graph():
     response_data = {"nodes": nodes_data, "links": links_data}
     response = make_response(jsonify(response_data), 200)
     return response
-
-
-@core_bp.route("/event",)
-@login_required
-def event():
-    return render_template('core/event.html')
