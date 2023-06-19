@@ -131,6 +131,7 @@ async function transitionBetweenNodes(startNode, endNode) {
 
             for(let i = 0; i < path.length - 1; i++) {
                 await transition(path[i], path[i+1]);
+                transitionMade(path[i+1].id);
             }
 
             console.log("Destination reached.");

@@ -29,20 +29,23 @@
         .data(responseJSON.links)
         .enter().append("line");
 
-    var node = g.append("g")
+        var node = g.append("g")
         .attr("class", "nodes")
         .selectAll("circle")
         .data(responseJSON.nodes)
         .enter().append("circle")
         .attr("r", 5.0)
         .attr("fill", "darkgray")
+        .attr("clickCount", 0)  
+        .attr("clickTimeout", null) 
         .call(d3.drag()
             .on("start", dragstarted)
             .on("drag", dragged)
             .on("end", dragended))
-            .on("click", function (d) {
-                updateInfo(d);
-            })
+        .on("click", function (d) {
+            updateInfo(d);
+        });
+    
 
     node.append("title")
         .text(function(d) { return d.name; });
@@ -92,6 +95,27 @@
         d.fy = null;
     }
 
+    var colorScale = d3.scaleSequential().domain([0,10]).interpolator(d3.interpolateReds);
+
+     window.transitionMade = function(id) {
+        var svg = d3.select('#physicsMap');
+        var node = svg.selectAll("circle").filter(function(d) { return d && d.id === id; });
+        
+        clearTimeout(node.attr("clickTimeout"));
+        
+        var currentCount = Number(node.attr("clickCount")) + 1;
+        node.attr("clickCount", currentCount);
+        node.attr("fill", colorScale(currentCount));
+
+        node.attr("clickTimeout", setTimeout(() => {
+            node.attr("r", 5.0);
+            node.attr("fill", "darkgray");
+            node.attr("clickCount", 0);  
+        }, 750));
+    }
+    
+    
+
 })();
 
 //the function that called by button "Change Map"
@@ -116,22 +140,3 @@ function flip() {
     }
 
 }
-
-//the funciton that called by search bar
-function sendMesage() {
-    let keyword = document.getElementById("keyword").value;
-    let spots = d3.select("#spots").selectAll("circle")
-        .each(function (d) {
-            if (d.iata_code == keyword.toUpperCase() || d.icao_code == keyword.toUpperCase() || d.municipality.toUpperCase() == keyword.toUpperCase()) {
-                usmap.simulateClick(d, d3.select(this))
-                return;
-            }
-        })
-}
-
-//the function that called by enter hit
-function enterHit(event) {
-    if (event.which == 13 || event.KeyCode == 13)
-        sendMesage();
-}
-
