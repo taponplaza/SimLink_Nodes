@@ -1,6 +1,6 @@
-# Nodes version Demo
+# Nodes Map
 
-Version demo para probar el proyecto tfg aun sin acabar.
+Pequeña aplicación de visualización y simulación de comunicaciónes entre nodos en un mapa.
 
 1º clonar repositorio
 
