@@ -1,4 +1,4 @@
-# Nodes Map
+# SimLink Nodes
 
 Pequeña aplicación de visualización y simulación de comunicaciónes entre nodos en un mapa.
 
